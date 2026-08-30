@@ -12,15 +12,7 @@
         <script>
             document.addEventListener('DOMContentLoaded', function () {
                 const calendarEl = document.getElementById('calendar');
-                const events = @json($appointments->map(function ($a) {
-                    return [
-                        'id' => $a->id,
-                        'title' => $a->appointment_number . ($a->type ? ' · ' . $a->type : ''),
-                        'start' => $a->date->toDateString() . 'T' . $a->start_time,
-                        'end' => $a->date->toDateString() . 'T' . $a->end_time,
-                        'color' => $a->status === 'confirmed' ? '#1d4ed8' : ($a->status === 'pending' ? '#d97706' : '#16a34a'),
-                    ];
-                }));
+                const events = @json($events);
 
                 const calendar = new FullCalendar.Calendar(calendarEl, {
                     initialView: 'dayGridMonth',

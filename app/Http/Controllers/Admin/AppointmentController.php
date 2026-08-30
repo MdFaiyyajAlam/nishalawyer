@@ -42,7 +42,17 @@ class AppointmentController extends Controller
             ->where('date', '<=', now()->addMonths(3)->toDateString())
             ->get(['id', 'appointment_number', 'type', 'date', 'start_time', 'end_time', 'status']);
 
-        return view('admin.appointments.calendar', compact('appointments'));
+        $events = $appointments->map(function ($a) {
+            return [
+                'id' => $a->id,
+                'title' => $a->appointment_number . ($a->type ? ' · ' . $a->type : ''),
+                'start' => $a->date->toDateString() . 'T' . $a->start_time,
+                'end' => $a->date->toDateString() . 'T' . $a->end_time,
+                'color' => $a->status === 'confirmed' ? '#1d4ed8' : ($a->status === 'pending' ? '#d97706' : '#16a34a'),
+            ];
+        })->all();
+
+        return view('admin.appointments.calendar', compact('appointments', 'events'));
     }
 
     public function show(Appointment $appointment)
