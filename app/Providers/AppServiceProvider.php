@@ -49,5 +49,12 @@ class AppServiceProvider extends ServiceProvider
         \Blade::directive('advocateEmail', function () {
             return "<?php echo config('nishalawyer.advocate.email', ''); ?>";
         });
+
+        // @role('slug') ... @endrole — conditional block for users with a given role slug
+        \Blade::if('role', function (string $slug) {
+            $user = auth()->user();
+
+            return $user && $user->hasRole($slug);
+        });
     }
 }

@@ -40,7 +40,7 @@ class AppointmentController extends Controller
         $appointments = Appointment::whereIn('status', ['pending', 'confirmed'])
             ->where('date', '>=', now()->subMonths(2)->toDateString())
             ->where('date', '<=', now()->addMonths(3)->toDateString())
-            ->get(['id', 'title', 'date', 'start_time', 'end_time', 'status']);
+            ->get(['id', 'appointment_number', 'type', 'date', 'start_time', 'end_time', 'status']);
 
         return view('admin.appointments.calendar', compact('appointments'));
     }

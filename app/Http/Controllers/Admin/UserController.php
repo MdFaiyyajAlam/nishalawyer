@@ -30,7 +30,7 @@ class UserController extends Controller
             });
         }
 
-        $users = $query->orderBy('name')->paginate(15);
+        $users = $query->orderBy('first_name')->paginate(15);
 
         return view('admin.users.index', compact('users'));
     }
